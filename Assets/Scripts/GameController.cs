@@ -6,7 +6,7 @@ public class GameController : MonoBehaviour
 {
     Block[,] matrix;
     bool shiftIsActive = true;
-    bool[] RowToShift = new bool[20];
+    
     //public static float MAP_SIZE_X = 5.5f;
     //public static float MAP_SIZE_Y = 9.5f;
     public void BuildMap()
@@ -58,16 +58,16 @@ public class GameController : MonoBehaviour
         return true;
     }
 
-    private void ShiftAllBlocksDown(int startRow)
+    private IEnumerator ShiftAllBlocksDown(int startRow)
     {
-        //if (!shiftIsActive)
-        //{
-        //    yield break;
-        //}
-        //yield return new WaitForSeconds(1f);
+        if (!shiftIsActive)
+        {
+            yield break;
+        }
+        yield return new WaitForSeconds(1f);
         if (startRow >= 20)
         {
-            return;
+            yield break;
         }
         for (int row = startRow + 1; row < 20; ++row)
         {
@@ -86,7 +86,7 @@ public class GameController : MonoBehaviour
     private void CheckLines()
     {
         bool linesDeleted = false;
-        RowToShift = new bool[20];
+        bool[] RowToShift = new bool[20];
         for (int row = 0; row < 20; ++row)
         {
             int count = 0;
@@ -120,7 +120,8 @@ public class GameController : MonoBehaviour
         {
             if (RowToShift[row])
             {
-                ShiftAllBlocksDown(row);
+                shiftIsActive = true;
+                StartCoroutine(ShiftAllBlocksDown(row));
             }
         }
     }
