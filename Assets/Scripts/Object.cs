@@ -5,21 +5,21 @@ using UnityEngine;
 public class Object : MonoBehaviour
 {
     public bool move = true;
-    public bool borderHitLeft = false;
-    public bool borderHitRight = false;
-
     protected GameObject[] block = new GameObject[4];
+    
     float difficulty;
     float timeToMove;
-    //private int rotation = 0;
+   
+    GameController gc;
+    Spawner sp;
 
-    GameController gc; 
-
-    protected int[,] map = new int[4, 4];
+    public int[,] map = new int[4, 4];
 
     private void Awake()
     {
         gc = FindObjectOfType<GameController>();
+        sp = FindObjectOfType<Spawner>();
+
         for (int i = 0; i < 4; ++i)
         {
             block[i] = transform.GetChild(i).gameObject;
@@ -34,10 +34,16 @@ public class Object : MonoBehaviour
     {
         while (move)
         {
-            transform.position = new Vector2(transform.position.x, transform.position.y - 1);
-            // FindObjectOfType<GameController>().BuildMap();
-            // Move();
-            yield return new WaitForSeconds(timeToMove);
+            if(gc.CheckMovement(this, GameController.MovementType.MOVE_DOWN))
+            {
+                transform.position = new Vector2(transform.position.x, transform.position.y - 1);
+                yield return new WaitForSeconds(timeToMove);
+            } else {
+                Debug.Log("Stop Move");
+                move = false;
+                sp.spawn = true;
+            }
+            
         }
     }
 
@@ -62,8 +68,6 @@ public class Object : MonoBehaviour
 
     private void Rotate()
     {
-        borderHitLeft = false;
-        borderHitRight = false;
         int[,] newMap = new int[4, 4];
         for (int row = 0; row < 4; ++row)
         {
@@ -72,62 +76,52 @@ public class Object : MonoBehaviour
                 newMap[row, col] = map[col, 3 - row]; 
             }
         }
-        if (gc.CheckRotation(this, newMap))
+    
+        if (gc.CheckMovement(this, GameController.MovementType.MOVE_ROTATION ,newMap))
         {
             map = newMap;
             SetBlockPosition();
         }
     }
-    //public void BackRotation()
-    //{
-    //    borderHitLeft = false;
-    //    borderHitRight = false;
-    //    Debug.Log("BackRotation");
-    //    rotation -= 90;
-    //    transform.rotation = Quaternion.Euler(Vector3.forward * rotation);
-    //}
-
-    /*private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Full Object" && move)
-        {
-            BackRotation();
-        }
-    }*/
-
+   
     private void Update()
     {
         if (move)
         {
-            if (Input.GetKeyDown(KeyCode.LeftArrow) && !borderHitLeft)
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
             {
-                transform.position = new Vector2(transform.position.x - 1, transform.position.y);
-                borderHitRight = false;
+                if (gc.CheckMovement(this, GameController.MovementType.MOVE_LEFT))
+                {
+                    transform.position = new Vector2(transform.position.x - 1, transform.position.y);
+                }
+            }
 
-            }
-            if (Input.GetKeyDown(KeyCode.RightArrow) && !borderHitRight)
+            if (Input.GetKeyDown(KeyCode.RightArrow))
             {
-                transform.position = new Vector2(transform.position.x + 1, transform.position.y);
-                borderHitLeft = false;
+                if (gc.CheckMovement(this, GameController.MovementType.MOVE_RIGHT))
+                {
+                    transform.position = new Vector2(transform.position.x + 1, transform.position.y);
+                }
             }
+
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 Rotate();
-                // borderHitLeft = false;
-                // borderHitRight = false;
-                // rotation += 90;
-                // if (rotation == 360)
-                // { rotation = 0; }
-                // transform.rotation = Quaternion.Euler(Vector3.forward * rotation);
             }
+
             if (Input.GetKeyDown(KeyCode.DownArrow))
             {
-                transform.position = new Vector2(transform.position.x, transform.position.y - 1);
+                if (gc.CheckMovement(this, GameController.MovementType.MOVE_DOWN))
+                {
+                    transform.position = new Vector2(transform.position.x, transform.position.y - 1);
+                }
             }
+
             if (Input.GetKey(KeyCode.Space))
             {
                 timeToMove = 0.05f;
             }
+
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 timeToMove = 2.25f - difficulty;

@@ -6,6 +6,9 @@ public class GameController : MonoBehaviour
 {
     Block[,] matrix;
     bool shiftIsActive = true;
+
+    private int MAX_X = 12;
+    private int MAX_Y = 24;
     
     //public static float MAP_SIZE_X = 5.5f;
     //public static float MAP_SIZE_Y = 9.5f;
@@ -17,80 +20,112 @@ public class GameController : MonoBehaviour
 
     private void BuildMatrix()
     {
-        matrix = new Block[12, 20];
+        matrix = new Block[MAX_X, MAX_Y];
         Block[] blocks = FindObjectsOfType<Block>();
         for (int i = 0; i < blocks.Length; ++i)
         {
-            int x, y;
-            (x, y) = blocks[i].GetMapPosition();
-            if (x >= 0 && x < 12 && y >= 0 && y < 20)
+            Object o = blocks[i].transform.parent.gameObject.GetComponent<Object>();
+            if(!o.move)
             {
-                matrix[x, y] = blocks[i];
-                matrix[x, y].disableCollision = true;
+                int x, y;
+                (x, y) = blocks[i].GetMapPosition();
+                if (x >= 0 && x < MAX_X && y >= 0 && y < MAX_Y)
+                {
+                    matrix[x, y] = blocks[i];
+                    matrix[x, y].disableCollision = true;
+                }
             }
+           
         }
     }
 
-    public bool CheckRotation(Object obj, int[,] newMap)
+    public enum MovementType
     {
+        MOVE_DOWN = 0,
+        MOVE_LEFT = 1, 
+        MOVE_RIGHT = 2, 
+        MOVE_ROTATION = 3
+    };
+
+    private bool CheckMatixBorders(int x, int y)
+    {
+        if( x < 0 || x >= MAX_X || y < 0 || y >= MAX_Y || matrix[x, y])
+        {
+            return false;
+        }
+
+        return true;
+    }
+    public bool CheckMovement(Object obj, MovementType mt, int[,] newMap = null)
+    {
+        int[,] map = mt == MovementType.MOVE_ROTATION ? newMap : obj.map;
+               
+        // these are x and y coordinate modifiers for each movement type
+        //                               X    Y
+        int[,] modXY = new int[4, 2] { { 0 , -1 },      // MOVE_DOWN = 0,
+                                       {-1 ,  0 },      // MOVE_LEFT = 1, 
+                                       { 1 ,  0 } ,     // MOVE_RIGHT = 2, 
+                                       { 0 ,  0 } , };  // MOVE_ROTATION = 3
+
         for (int row = 0; row < 4; ++row)
         {
             for (int col = 0; col < 4; ++col)
             {
-                if (newMap[row, col] > 0)
+                if (map[row, col] > 0)
                 {
-                    int x = Mathf.RoundToInt(obj.transform.position.x + col + 5.5f);
-                    int y = Mathf.RoundToInt(obj.transform.position.y + row + 9.5f);
-                    if (x >= 0 && x < 12 && y >= 0 && y < 20)
-                    {
-                        if (matrix[x, y])
-                        {
-                            return false;
-                        }
-                    }
-                    else
+                    int x = Mathf.RoundToInt(obj.transform.position.x + col + 5.5f) + modXY[(int)mt, 0];
+                    int y = Mathf.RoundToInt(obj.transform.position.y + row + 9.5f) + modXY[(int)mt, 1];
+
+                    if(!CheckMatixBorders(x, y))
                     {
                         return false;
                     }
                 }
             }
         }
+        
         return true;
     }
-
-    private IEnumerator ShiftAllBlocksDown(int startRow)
+   
+    private IEnumerator ShiftAllBlocksDown(bool[] RowToShift)
     {
         if (!shiftIsActive)
         {
             yield break;
         }
         yield return new WaitForSeconds(1f);
-        if (startRow >= 20)
+
+        for (int rowToShift = 0; rowToShift < MAX_Y; ++rowToShift)
         {
-            yield break;
-        }
-        for (int row = startRow + 1; row < 20; ++row)
-        {
-            for (int col = 0; col < 12; ++col)
+            if (RowToShift[rowToShift])
             {
-                if (matrix[col, row])
+                for(int row = rowToShift + 1; row < MAX_Y; ++row)
                 {
-                    matrix[col, row].transform.position = 
-                        new Vector2(matrix[col, row].transform.position.x, matrix[col, row].transform.position.y - 1);
+                    for (int col = 0; col < MAX_X; ++col)
+                    {
+                        if (matrix[col, row])
+                        {
+                            matrix[col, row].transform.position =
+                                new Vector2(matrix[col, row].transform.position.x, matrix[col, row].transform.position.y - 1);
+                        }
+                    }
                 }
+                
             }
         }
+               
+        BuildMatrix();
         shiftIsActive = false;
     }
 
     private void CheckLines()
     {
-        bool linesDeleted = false;
-        bool[] RowToShift = new bool[20];
-        for (int row = 0; row < 20; ++row)
+        bool[] RowToShift = new bool[MAX_Y];
+        bool fullLine = false;
+        for (int row = 0; row < MAX_Y; ++row)
         {
             int count = 0;
-            for (int col = 0; col < 12; ++col)
+            for (int col = 0; col < MAX_X; ++col)
             {
                 Block b = matrix[col, row];
                 if (b)
@@ -102,27 +137,20 @@ public class GameController : MonoBehaviour
             {
                 RowToShift[row] = true;
                 Debug.Log("Row " + row + " is full!");
-                for (int col = 0; col < 12; ++col)
+                for (int col = 0; col < MAX_X; ++col)
                 {
                     matrix[col, row].TriggerAnimation();
                 }
-                //shiftIsActive = true;
-                //ShiftAllBlocksDown(row);
-                linesDeleted = true;
+
+                fullLine = true;
             }
-        }
-        if (linesDeleted)
-        {
-            BuildMatrix();
         }
 
-        for (int row = 0; row < 20; ++row)
+        if (fullLine)
         {
-            if (RowToShift[row])
-            {
-                shiftIsActive = true;
-                StartCoroutine(ShiftAllBlocksDown(row));
-            }
+            shiftIsActive = true;
+            StartCoroutine(ShiftAllBlocksDown(RowToShift));
         }
+
     }
 }

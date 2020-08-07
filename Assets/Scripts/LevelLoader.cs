@@ -24,10 +24,5 @@ public class LevelLoader : MonoBehaviour
         Time.timeScale = 1;
         SceneManager.LoadScene("Starting Screen");
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+     
 }

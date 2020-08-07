@@ -358,7 +358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 450049376178617131, guid: 7aef3e41e7ccce748842dde8490124b9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.5
+      value: 8.5
       objectReference: {fileID: 0}
     - target: {fileID: 450049376178617131, guid: 7aef3e41e7ccce748842dde8490124b9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -460,6 +460,10 @@ PrefabInstance:
     - target: {fileID: 1697717772474645812, guid: 6bc158725b26f1f4c9194677ec125c51, type: 3}
       propertyPath: m_TagString
       value: Shredder
+      objectReference: {fileID: 0}
+    - target: {fileID: 1697717772474645812, guid: 6bc158725b26f1f4c9194677ec125c51, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bc158725b26f1f4c9194677ec125c51, type: 3}
@@ -758,6 +762,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Border
       objectReference: {fileID: 0}
+    - target: {fileID: 805428595472507778, guid: 6f1f7ef0802a2484ea7b563cc2044699, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 960841948836737586, guid: 6f1f7ef0802a2484ea7b563cc2044699, type: 3}
       propertyPath: m_Offset.y
       value: 0
@@ -871,6 +879,10 @@ PrefabInstance:
     - target: {fileID: 8839373733991022482, guid: d4fb04078267a7f43b0c3c8dac90f4d6, type: 3}
       propertyPath: m_TagString
       value: Border
+      objectReference: {fileID: 0}
+    - target: {fileID: 8839373733991022482, guid: d4fb04078267a7f43b0c3c8dac90f4d6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 31719857, guid: d4fb04078267a7f43b0c3c8dac90f4d6, type: 3}
