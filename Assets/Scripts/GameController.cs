@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    int score = 0;
     Block[,] matrix;
     bool shiftIsActive = true;
+    [SerializeField] int scoreValue = 132;
 
     private int MAX_X = 12;
     private int MAX_Y = 24;
@@ -150,7 +152,19 @@ public class GameController : MonoBehaviour
         {
             shiftIsActive = true;
             StartCoroutine(ShiftAllBlocksDown(RowToShift));
+            AddToScore(scoreValue);
         }
 
     }
+
+    public int GetScore()
+    {
+        return score;
+    }
+
+    public void AddToScore(int scoreValue)
+    {
+        score += scoreValue;
+    }
+
 }
