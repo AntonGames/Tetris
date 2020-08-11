@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class OptionsController : MonoBehaviour
 {
-    [SerializeField] Slider difficultySlider;
+    [SerializeField] public Slider difficultySlider;
     [SerializeField] float defaultDifficulty = 0.5f;
     // Start is called before the first frame update
 
     private void Start()
     {
+        difficultySlider.value = PlayerPrefsController.GetDifficulty();
         Debug.Log(difficultySlider);
     }
 

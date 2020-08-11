@@ -16,6 +16,7 @@ public class LevelLoader : MonoBehaviour
 
     public void LoadMainScene()
     {
+        PlayerPrefsController.SetDifficulty(FindObjectOfType<OptionsController>().difficultySlider.value);
         SceneManager.LoadScene("Main Scene");
     }
 

@@ -56,7 +56,6 @@ public class GameController : MonoBehaviour
                     matrix[x, y].disableCollision = true;
                 }
             }
-           
         }
     }
 
@@ -74,7 +73,6 @@ public class GameController : MonoBehaviour
         {
             return false;
         }
-
         return true;
     }
     public bool CheckMovement(Object obj, MovementType mt, int[,] newMap = null)
@@ -104,7 +102,6 @@ public class GameController : MonoBehaviour
                 }
             }
         }
-        
         return true;
     }
    
@@ -133,8 +130,7 @@ public class GameController : MonoBehaviour
                 }
                 
             }
-        }
-               
+        }      
         BuildMatrix();
         shiftIsActive = false;
     }
