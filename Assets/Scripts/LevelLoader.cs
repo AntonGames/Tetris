@@ -14,15 +14,21 @@ public class LevelLoader : MonoBehaviour
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
-    public void LoadNextScene()
+    public void LoadMainScene()
     {
-        SceneManager.LoadScene(currentSceneIndex + 1);
+        SceneManager.LoadScene("Main Scene");
     }
 
     public void LoadStartingScreen()
     {
-        Time.timeScale = 1;
+        //Time.timeScale = 1;
         SceneManager.LoadScene("Starting Screen");
     }
-     
+
+    public void LoadGameOverScreen()
+    {
+        //Time.timeScale = 1;
+        SceneManager.LoadScene("Game Over Screen");
+    }
+
 }

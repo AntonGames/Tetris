@@ -38,9 +38,15 @@ public class Object : MonoBehaviour
             {
                 transform.position = new Vector2(transform.position.x, transform.position.y - 1);
                 yield return new WaitForSeconds(timeToMove);
-            } else {
+            } 
+            else 
+            {
                 Debug.Log("Stop Move");
                 move = false;
+                if (transform.position.y >= 6.5)
+                {
+                    FindObjectOfType<LevelLoader>().LoadGameOverScreen();
+                }
                 sp.spawn = true;
             }
             

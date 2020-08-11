@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameController : MonoBehaviour
 {
     int score = 0;
+    int bonus = 0;
     Block[,] matrix;
     bool shiftIsActive = true;
     [SerializeField] int scoreValue = 132;
@@ -18,6 +19,24 @@ public class GameController : MonoBehaviour
     {
         BuildMatrix();
         CheckLines();
+    }
+
+    private void Awake()
+    {
+        SetUpSingleton();
+    }
+
+    private void SetUpSingleton()
+    {
+        int numberGameSessions = FindObjectsOfType<GameController>().Length;
+        if (numberGameSessions > 1)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     private void BuildMatrix()
@@ -143,7 +162,8 @@ public class GameController : MonoBehaviour
                 {
                     matrix[col, row].TriggerAnimation();
                 }
-
+                AddToScore(scoreValue);
+                bonus += 1;
                 fullLine = true;
             }
         }
@@ -152,7 +172,11 @@ public class GameController : MonoBehaviour
         {
             shiftIsActive = true;
             StartCoroutine(ShiftAllBlocksDown(RowToShift));
-            AddToScore(scoreValue);
+            if (bonus >= 2)
+            {
+                AddToScore(scoreValue * bonus);
+            }
+            bonus = 0;
         }
 
     }

@@ -172,8 +172,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6.3, y: 128.4}
-  m_SizeDelta: {x: 520.4789, y: 188.67236}
+  m_AnchoredPosition: {x: -3.3, y: 131.96}
+  m_SizeDelta: {x: 595.36, y: 181.54755}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8000947248172854305
 CanvasRenderer:
@@ -262,7 +262,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4841691011990464023, guid: 4dfcaed477210c94bb5825fb0ba235c0, type: 3}
         m_TargetAssemblyTypeName: LevelLoader, Assembly-CSharp
-        m_MethodName: LoadNextScene
+        m_MethodName: LoadMainScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -470,7 +470,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -93.818, y: 0.000012398}
+  m_AnchoredPosition: {x: -86, y: 0.000012398}
   m_SizeDelta: {x: 243.36456, y: 82.37729}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8000947248929069324
