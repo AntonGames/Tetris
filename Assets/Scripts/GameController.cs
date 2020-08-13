@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    public int score = 0;
+    int score = 0;
     int bonus = 0;
     Block[,] matrix;
     bool shiftIsActive = true;
@@ -21,7 +21,7 @@ public class GameController : MonoBehaviour
         CheckLines();
     }
 
-    /*private void Awake()
+    private void Awake()
     {
         SetUpSingleton();
     }
@@ -31,13 +31,13 @@ public class GameController : MonoBehaviour
         int numberGameSessions = FindObjectsOfType<GameController>().Length;
         if (numberGameSessions > 1)
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
             DontDestroyOnLoad(gameObject);
         }
-    }*/
+    }
 
     private void BuildMatrix()
     {
