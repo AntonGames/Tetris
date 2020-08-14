@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    public int score = 0;
+    //public static int score = 0;
     int bonus = 0;
     Block[,] matrix;
     bool shiftIsActive = true;
@@ -21,12 +21,12 @@ public class GameController : MonoBehaviour
         CheckLines();
     }
 
-    /*private void Awake()
+    private void Awake()
     {
-        SetUpSingleton();
+        PlayerPrefsController.SetCurrentScoreToZero();
     }
 
-    private void SetUpSingleton()
+    /*private void SetUpSingleton()
     {
         int numberGameSessions = FindObjectsOfType<GameController>().Length;
         if (numberGameSessions > 1)
@@ -158,7 +158,7 @@ public class GameController : MonoBehaviour
                 {
                     matrix[col, row].TriggerAnimation();
                 }
-                AddToScore(scoreValue);
+                PlayerPrefsController.SetCurrentScore(scoreValue);
                 bonus += 1;
                 fullLine = true;
             }
@@ -170,21 +170,20 @@ public class GameController : MonoBehaviour
             StartCoroutine(ShiftAllBlocksDown(RowToShift));
             if (bonus >= 2)
             {
-                AddToScore(scoreValue * bonus);
+                PlayerPrefsController.SetCurrentScore(scoreValue * bonus);
             }
             bonus = 0;
         }
 
     }
 
-    public int GetScore()
-    {
-        return score;
-    }
-
-    public void AddToScore(int scoreValue)
-    {
-        score += scoreValue;
-    }
-
+    //public int GetScore()
+    //{
+    //    return score;
+    //}
+    //
+    //public void AddToScore(int scoreValue)
+    //{
+    //    score += scoreValue;
+    //}
 }

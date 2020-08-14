@@ -49,4 +49,15 @@ public class HighestScoreTable : MonoBehaviour
         secondScoreText.text = PlayerPrefsController.GetScore(2).ToString();
         thirdScoreText.text = PlayerPrefsController.GetScore(3).ToString();
     }
+
+    public void SetPlayerNameAndScore()
+    {
+        firstPlayerText.text = PlayerPrefsController.GetPlayer(1);
+        secondPlayerText.text = PlayerPrefsController.GetPlayer(2);
+        thirdPlayerText.text = PlayerPrefsController.GetPlayer(3);
+        firstScoreText.text = PlayerPrefsController.GetScore(1).ToString();
+        secondScoreText.text = PlayerPrefsController.GetScore(2).ToString();
+        thirdScoreText.text = PlayerPrefsController.GetScore(3).ToString();
+    }
+
 }

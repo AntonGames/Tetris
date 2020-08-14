@@ -12,12 +12,12 @@ public class ScoreDisplay : MonoBehaviour
     void Start()
     {
         scoreText = GetComponent<Text>();
-        gameSession = FindObjectOfType<GameController>();
+        //gameSession = FindObjectOfType<GameController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = gameSession.GetScore().ToString();
+        scoreText.text = PlayerPrefsController.GetCurrentScore().ToString();
     }
 }

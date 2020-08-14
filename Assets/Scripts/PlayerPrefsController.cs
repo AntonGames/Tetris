@@ -17,6 +17,24 @@ public class PlayerPrefsController : MonoBehaviour
     const string SECOND_SCORE = "second score";
     const string THIRD_SCORE = "third score";
 
+    const string CURRENT_SCORE = "current score";
+
+    public static void SetCurrentScoreToZero()
+    {
+        PlayerPrefs.SetInt(CURRENT_SCORE, 0);
+    }
+
+    public static void SetCurrentScore(int scoreValue)
+    {
+        int currentScore = GetCurrentScore();
+        PlayerPrefs.SetInt(CURRENT_SCORE, currentScore + scoreValue);
+    }
+
+    public static int GetCurrentScore()
+    {
+        return PlayerPrefs.GetInt(CURRENT_SCORE);
+    }
+
     public static int SetScore(int score)
     {
         if (GetScore(1) < score)
