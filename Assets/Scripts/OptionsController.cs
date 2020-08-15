@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class OptionsController : MonoBehaviour
 {
     [SerializeField] public Slider difficultySlider;
-    [SerializeField] float defaultDifficulty = 0.5f;
-    // Start is called before the first frame update
 
     private void Start()
     {
@@ -17,7 +15,6 @@ public class OptionsController : MonoBehaviour
 
     private void Update()
     {
-        // Debug.Log(difficultySlider);
         PlayerPrefsController.SetDifficulty(difficultySlider.value);
     }
 }

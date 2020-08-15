@@ -41,7 +41,6 @@ public class Object : MonoBehaviour
             } 
             else 
             {
-                Debug.Log("Stop Move");
                 move = false;
                 if (transform.position.y >= 6.5)
                 {

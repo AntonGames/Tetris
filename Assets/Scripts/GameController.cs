@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    //public static int score = 0;
     int bonus = 0;
     Block[,] matrix;
     bool shiftIsActive = true;
@@ -13,8 +12,6 @@ public class GameController : MonoBehaviour
     private int MAX_X = 12;
     private int MAX_Y = 24;
     
-    //public static float MAP_SIZE_X = 5.5f;
-    //public static float MAP_SIZE_Y = 9.5f;
     public void BuildMap()
     {
         BuildMatrix();
@@ -25,19 +22,6 @@ public class GameController : MonoBehaviour
     {
         PlayerPrefsController.SetCurrentScoreToZero();
     }
-
-    /*private void SetUpSingleton()
-    {
-        int numberGameSessions = FindObjectsOfType<GameController>().Length;
-        if (numberGameSessions > 1)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-    }*/
 
     private void BuildMatrix()
     {
@@ -153,7 +137,6 @@ public class GameController : MonoBehaviour
             if (count == 12)
             {
                 RowToShift[row] = true;
-                Debug.Log("Row " + row + " is full!");
                 for (int col = 0; col < MAX_X; ++col)
                 {
                     matrix[col, row].TriggerAnimation();
@@ -176,14 +159,4 @@ public class GameController : MonoBehaviour
         }
 
     }
-
-    //public int GetScore()
-    //{
-    //    return score;
-    //}
-    //
-    //public void AddToScore(int scoreValue)
-    //{
-    //    score += scoreValue;
-    //}
 }

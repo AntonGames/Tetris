@@ -22,7 +22,6 @@ public class HighestScoreTable : MonoBehaviour
     Text secondScoreText;
     Text thirdScoreText;
 
-    // Start is called before the first frame update
     void Start()
     {
         firstPlayer = transform.GetChild(0).gameObject;
