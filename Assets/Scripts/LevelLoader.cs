@@ -22,4 +22,8 @@ public class LevelLoader : MonoBehaviour
         SceneManager.LoadScene("Game Over Screen");
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 }
