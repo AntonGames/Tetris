@@ -44,9 +44,30 @@ public class HighestScoreTable : MonoBehaviour
         secondScoreText = secondScore.GetComponent<Text>();
         thirdScoreText = thirdScore.GetComponent<Text>();
 
-        firstScoreText.text = PlayerPrefsController.GetScore(1).ToString();
-        secondScoreText.text = PlayerPrefsController.GetScore(2).ToString();
-        thirdScoreText.text = PlayerPrefsController.GetScore(3).ToString();
+        if (PlayerPrefsController.GetScore(1) == 0)
+        {
+            firstScoreText.text = "-";
+        }
+        else
+        {
+            firstScoreText.text = PlayerPrefsController.GetScore(1).ToString();
+        }
+        if (PlayerPrefsController.GetScore(2) == 0)
+        {
+            secondScoreText.text = "-";
+        }
+        else
+        {
+            secondScoreText.text = PlayerPrefsController.GetScore(2).ToString();
+        }
+        if (PlayerPrefsController.GetScore(3) == 0)
+        {
+            thirdScoreText.text = "-";
+        }
+        else
+        {
+            thirdScoreText.text = PlayerPrefsController.GetScore(3).ToString();
+        }
     }
 
     public void SetPlayerNameAndScore()
@@ -54,9 +75,29 @@ public class HighestScoreTable : MonoBehaviour
         firstPlayerText.text = PlayerPrefsController.GetPlayer(1);
         secondPlayerText.text = PlayerPrefsController.GetPlayer(2);
         thirdPlayerText.text = PlayerPrefsController.GetPlayer(3);
-        firstScoreText.text = PlayerPrefsController.GetScore(1).ToString();
-        secondScoreText.text = PlayerPrefsController.GetScore(2).ToString();
-        thirdScoreText.text = PlayerPrefsController.GetScore(3).ToString();
+        if (PlayerPrefsController.GetScore(1) == 0)
+        {
+            firstScoreText.text = "-";
+        }
+        else
+        {
+            firstScoreText.text = PlayerPrefsController.GetScore(1).ToString();
+        }
+        if (PlayerPrefsController.GetScore(2) == 0)
+        {
+            secondScoreText.text = "-";
+        }
+        else
+        {
+            secondScoreText.text = PlayerPrefsController.GetScore(2).ToString();
+        }
+        if (PlayerPrefsController.GetScore(3) == 0)
+        {
+            thirdScoreText.text = "-";
+        }
+        else
+        {
+            thirdScoreText.text = PlayerPrefsController.GetScore(3).ToString();
+        }
     }
-
 }

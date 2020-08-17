@@ -5,16 +5,29 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] GameObject[] objectsArray;
+    [SerializeField] GameObject[] debugObjectsArray;
     public bool spawn = true;
 
     // Start is called before the first frame update
     void Update()
     {
-        while (spawn)
+        if (FindObjectOfType<DebugMode>().debugMode == false)
         {
-            var attackerIndex = Random.Range(0, objectsArray.Length);
-            Spawn(objectsArray[attackerIndex]);
-            spawn = false;
+            while (spawn)
+            {
+                var attackerIndex = Random.Range(0, objectsArray.Length);
+                Spawn(objectsArray[attackerIndex]);
+                spawn = false;
+            }
+        }
+        else if (FindObjectOfType<DebugMode>().debugMode == true)
+        {
+            while (spawn)
+            {
+                var attackerIndex = Random.Range(0, debugObjectsArray.Length);
+                Spawn(debugObjectsArray[attackerIndex]);
+                spawn = false;
+            }
         }
     }
 

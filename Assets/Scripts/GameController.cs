@@ -157,6 +157,5 @@ public class GameController : MonoBehaviour
             }
             bonus = 0;
         }
-
     }
 }
