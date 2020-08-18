@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    public int levelScore = 0;
+    public int levelNumber = 1;
     int bonus = 0;
     Block[,] matrix;
     bool shiftIsActive = true;
@@ -11,7 +13,11 @@ public class GameController : MonoBehaviour
 
     private int MAX_X = 12;
     private int MAX_Y = 24;
-    
+
+    AudioSource myAudioSource;
+    [SerializeField] AudioClip fullLineAudio;
+    [SerializeField] [Range(0, 1)] float fullLineAudioVolume = 0.3f; 
+
     public void BuildMap()
     {
         BuildMatrix();
@@ -20,6 +26,7 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        myAudioSource = GetComponent<AudioSource>();
         PlayerPrefsController.SetCurrentScoreToZero();
     }
 
@@ -142,6 +149,7 @@ public class GameController : MonoBehaviour
                     matrix[col, row].TriggerAnimation();
                 }
                 PlayerPrefsController.SetCurrentScore(scoreValue);
+                levelScore += scoreValue;
                 bonus += 1;
                 fullLine = true;
             }
@@ -154,8 +162,16 @@ public class GameController : MonoBehaviour
             if (bonus >= 2)
             {
                 PlayerPrefsController.SetCurrentScore(scoreValue * bonus);
+                levelScore += scoreValue * bonus;
+            }
+            if (levelScore >= 500)
+            {
+                levelScore = 0;
+                levelNumber += 1;
             }
             bonus = 0;
+            AudioClip fullLineClip = fullLineAudio;
+            myAudioSource.PlayOneShot(fullLineClip, fullLineAudioVolume);
         }
     }
 }

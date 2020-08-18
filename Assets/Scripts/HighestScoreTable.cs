@@ -5,99 +5,41 @@ using UnityEngine.UI;
 
 public class HighestScoreTable : MonoBehaviour
 {
+    GameObject[] player = new GameObject[3];
+    Text[] playerText = new Text[3];
+    GameObject[] score = new GameObject[3];
+    Text[] scoreText = new Text[3];
 
-    GameObject firstPlayer;
-    GameObject secondPlayer;
-    GameObject thirdPlayer;
+    private void ResetPlayerNameAndScore(int index)
+    {
+        playerText[index].text = PlayerPrefsController.GetPlayer(index + 1);
 
-    Text firstPlayerText;
-    Text secondPlayerText;
-    Text thirdPlayerText;
-
-    GameObject firstScore;
-    GameObject secondScore;
-    GameObject thirdScore;
-
-    Text firstScoreText;
-    Text secondScoreText;
-    Text thirdScoreText;
+        scoreText[index].text = PlayerPrefsController.GetScore(index + 1) == 0 ?
+                                "-" :
+                                PlayerPrefsController.GetScore(index + 1).ToString();
+    }
 
     void Start()
     {
-        firstPlayer = transform.GetChild(0).gameObject;
-        secondPlayer = transform.GetChild(1).gameObject;
-        thirdPlayer = transform.GetChild(2).gameObject;
+        for (int index = 0; index < 3; ++index)
+        {
+            player[index] = transform.GetChild(index).gameObject;
+            playerText[index] = player[index].GetComponent<Text>();
+            score[index] = transform.GetChild(index + 3).gameObject;
 
-        firstPlayerText = firstPlayer.GetComponent<Text>();
-        secondPlayerText = secondPlayer.GetComponent<Text>();
-        thirdPlayerText = thirdPlayer.GetComponent<Text>();
+            scoreText[index] = score[index].GetComponent<Text>();
 
-        firstPlayerText.text = PlayerPrefsController.GetPlayer(1);
-        secondPlayerText.text = PlayerPrefsController.GetPlayer(2);
-        thirdPlayerText.text = PlayerPrefsController.GetPlayer(3);
+            ResetPlayerNameAndScore(index);
+        }
 
-        firstScore = transform.GetChild(3).gameObject;
-        secondScore = transform.GetChild(4).gameObject;
-        thirdScore = transform.GetChild(5).gameObject;
-
-        firstScoreText = firstScore.GetComponent<Text>();
-        secondScoreText = secondScore.GetComponent<Text>();
-        thirdScoreText = thirdScore.GetComponent<Text>();
-
-        if (PlayerPrefsController.GetScore(1) == 0)
-        {
-            firstScoreText.text = "-";
-        }
-        else
-        {
-            firstScoreText.text = PlayerPrefsController.GetScore(1).ToString();
-        }
-        if (PlayerPrefsController.GetScore(2) == 0)
-        {
-            secondScoreText.text = "-";
-        }
-        else
-        {
-            secondScoreText.text = PlayerPrefsController.GetScore(2).ToString();
-        }
-        if (PlayerPrefsController.GetScore(3) == 0)
-        {
-            thirdScoreText.text = "-";
-        }
-        else
-        {
-            thirdScoreText.text = PlayerPrefsController.GetScore(3).ToString();
-        }
     }
 
     public void SetPlayerNameAndScore()
     {
-        firstPlayerText.text = PlayerPrefsController.GetPlayer(1);
-        secondPlayerText.text = PlayerPrefsController.GetPlayer(2);
-        thirdPlayerText.text = PlayerPrefsController.GetPlayer(3);
-        if (PlayerPrefsController.GetScore(1) == 0)
+        for (int index = 0; index < 3; ++index)
         {
-            firstScoreText.text = "-";
-        }
-        else
-        {
-            firstScoreText.text = PlayerPrefsController.GetScore(1).ToString();
-        }
-        if (PlayerPrefsController.GetScore(2) == 0)
-        {
-            secondScoreText.text = "-";
-        }
-        else
-        {
-            secondScoreText.text = PlayerPrefsController.GetScore(2).ToString();
-        }
-        if (PlayerPrefsController.GetScore(3) == 0)
-        {
-            thirdScoreText.text = "-";
-        }
-        else
-        {
-            thirdScoreText.text = PlayerPrefsController.GetScore(3).ToString();
+            ResetPlayerNameAndScore(index);
         }
     }
 }
+

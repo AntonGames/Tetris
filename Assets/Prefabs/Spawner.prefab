@@ -51,4 +51,7 @@ MonoBehaviour:
   - {fileID: 3376700635936801925, guid: e291740263eafa34b994d71b8decbe48, type: 3}
   - {fileID: 1176222649377274721, guid: 5281e43a6c6743642844560df64e65a6, type: 3}
   - {fileID: 4173047335077616402, guid: 6bb2e1ff39721fc41a8e475b50c6982e, type: 3}
+  debugObjectsArray:
+  - {fileID: 2447580740656655582, guid: 29db79d22b35d0f44be2a98ff267237b, type: 3}
+  - {fileID: 4173047335077616402, guid: 6bb2e1ff39721fc41a8e475b50c6982e, type: 3}
   spawn: 1

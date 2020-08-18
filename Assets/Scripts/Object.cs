@@ -6,17 +6,23 @@ public class Object : MonoBehaviour
 {
     public bool move = true;
     protected GameObject[] block = new GameObject[4];
-    
+    [SerializeField] AudioClip[] objectStop;
+    [SerializeField] [Range(0, 1)] float objectStopVolume = 0.2f;
+    [SerializeField] AudioClip playerDeath;
+    [SerializeField] [Range(0, 1)] float playerDeathVolume = 0.4f;
+
     float difficulty;
     float timeToMove;
    
     GameController gc;
     Spawner sp;
+    AudioSource myAudioSource;
 
     public int[,] map = new int[4, 4];
 
     private void Awake()
     {
+        myAudioSource = GetComponent<AudioSource>();
         gc = FindObjectOfType<GameController>();
         sp = FindObjectOfType<Spawner>();
 
@@ -27,7 +33,7 @@ public class Object : MonoBehaviour
         SetBlockMap();
         SetBlockPosition();
         difficulty = PlayerPrefsController.GetDifficulty();
-        timeToMove = 2.25f - difficulty;
+        timeToMove = 2 * (2.25f - difficulty) / FindObjectOfType<GameController>().levelNumber;
     }
 
     IEnumerator Start()
@@ -42,8 +48,12 @@ public class Object : MonoBehaviour
             else 
             {
                 move = false;
+                AudioClip stopClip = objectStop[UnityEngine.Random.Range(0, objectStop.Length)];
+                myAudioSource.PlayOneShot(stopClip, objectStopVolume);
                 if (transform.position.y >= 6.5)
                 {
+                    AudioClip deathClip = playerDeath;
+                    myAudioSource.PlayOneShot(deathClip, playerDeathVolume);
                     FindObjectOfType<LevelLoader>().LoadGameOverScreen();
                 }
                 sp.spawn = true;

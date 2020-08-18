@@ -6,28 +6,28 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] GameObject[] objectsArray;
     [SerializeField] GameObject[] debugObjectsArray;
+    private GameObject[] objArray;
+
     public bool spawn = true;
+
+    public bool debugMode = false;
+    /* void Awake()
+     {
+         debugMode = FindObjectOfType<DebugMode>().debugMode;
+         objArray = debugMode ? debugObjectsArray : objectsArray;
+     }*/
 
     // Start is called before the first frame update
     void Update()
     {
-        if (FindObjectOfType<DebugMode>().debugMode == false)
+        debugMode = FindObjectOfType<DebugMode>().debugMode;
+        objArray = debugMode == true ? debugObjectsArray : objectsArray;
+
+        while (spawn)
         {
-            while (spawn)
-            {
-                var attackerIndex = Random.Range(0, objectsArray.Length);
-                Spawn(objectsArray[attackerIndex]);
-                spawn = false;
-            }
-        }
-        else if (FindObjectOfType<DebugMode>().debugMode == true)
-        {
-            while (spawn)
-            {
-                var attackerIndex = Random.Range(0, debugObjectsArray.Length);
-                Spawn(debugObjectsArray[attackerIndex]);
-                spawn = false;
-            }
+            var attackerIndex = Random.Range(0, objArray.Length);
+            Spawn(objArray[attackerIndex]);
+            spawn = false;
         }
     }
 

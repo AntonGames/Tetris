@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DebugModeText : MonoBehaviour
+public class SpeedLevel : MonoBehaviour
 {
-    private bool debugMode;
+    private int levelNumber;
     // Start is called before the first frame update
     void Start()
     {
-        debugMode = FindObjectOfType<DebugMode>().debugMode;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetComponent<Text>().text = debugMode ? "Debug Mode" : "";
+        levelNumber = FindObjectOfType<GameController>().levelNumber;
+        GetComponent<Text>().text = "Level " + levelNumber.ToString();
     }
 }
