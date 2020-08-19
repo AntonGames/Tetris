@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour
     {
         myAudioSource = GetComponent<AudioSource>();
         PlayerPrefsController.SetCurrentScoreToZero();
+        PlayerPrefsController.SetCurrentLevelToOne();
     }
 
     private void BuildMatrix()
@@ -168,6 +169,7 @@ public class GameController : MonoBehaviour
             {
                 levelScore = 0;
                 levelNumber += 1;
+                PlayerPrefsController.SetCurrentLevel(levelNumber);
             }
             bonus = 0;
             AudioClip fullLineClip = fullLineAudio;

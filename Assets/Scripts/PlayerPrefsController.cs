@@ -17,7 +17,66 @@ public class PlayerPrefsController : MonoBehaviour
     const string SECOND_SCORE = "second score";
     const string THIRD_SCORE = "third score";
 
+    const string FIRST_LEVEL = "first level";
+    const string SECOND_LEVEL = "second level";
+    const string THIRD_LEVEL = "third level";
+
     const string CURRENT_SCORE = "current score";
+    const string CURRENT_LEVEL = "current level";
+
+    public static void SetLevel(int playerNumber, string level)
+    {
+        if (playerNumber == 1)
+        {
+            PlayerPrefs.SetString(THIRD_LEVEL, GetLevel(2));
+            PlayerPrefs.SetString(SECOND_LEVEL, GetLevel(1));
+            PlayerPrefs.SetString(FIRST_LEVEL, level);
+        }
+        else if (playerNumber == 2)
+        {
+            PlayerPrefs.SetString(THIRD_LEVEL, GetLevel(2));
+            PlayerPrefs.SetString(SECOND_LEVEL, level);
+        }
+        else if (playerNumber == 3)
+        {
+            PlayerPrefs.SetString(THIRD_LEVEL, level);
+        }
+    }
+
+    public static string GetLevel(int playerNumber)
+    {
+        if (playerNumber == 1)
+        {
+            return PlayerPrefs.GetString(FIRST_LEVEL);
+        }
+        else if (playerNumber == 2)
+        {
+            return PlayerPrefs.GetString(SECOND_LEVEL);
+        }
+        else if (playerNumber == 3)
+        {
+            return PlayerPrefs.GetString(THIRD_LEVEL);
+        }
+        else
+        {
+            return " ";
+        }
+    }
+
+    public static void SetCurrentLevelToOne()
+    {
+        PlayerPrefs.SetInt(CURRENT_LEVEL, 1);
+    }
+
+    public static void SetCurrentLevel(int levelValue)
+    {
+        PlayerPrefs.SetInt(CURRENT_LEVEL, levelValue);
+    }
+
+    public static int GetCurrentLevel()
+    {
+        return PlayerPrefs.GetInt(CURRENT_LEVEL);
+    }
 
     public static void SetCurrentScoreToZero()
     {

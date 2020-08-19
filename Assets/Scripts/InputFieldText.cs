@@ -17,7 +17,10 @@ public class InputFieldText : MonoBehaviour
                 GetComponent<InputField>().readOnly = true;
                 int playerNumber = PlayerPrefsController.SetScore(PlayerPrefsController.GetCurrentScore());
                 string playerName = mainText.GetComponent<Text>().text;
+                int levelNumber = PlayerPrefsController.GetCurrentLevel();
+                string levelText = "Level " + levelNumber.ToString();
                 PlayerPrefsController.SetPlayer(playerNumber, playerName);
+                PlayerPrefsController.SetLevel(playerNumber, levelText);
                 FindObjectOfType<HighestScoreTable>().SetPlayerNameAndScore();
                 enterWasPressed = true;
             }

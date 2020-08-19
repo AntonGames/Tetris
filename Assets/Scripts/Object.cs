@@ -52,8 +52,11 @@ public class Object : MonoBehaviour
                 myAudioSource.PlayOneShot(stopClip, objectStopVolume);
                 if (transform.position.y >= 6.5)
                 {
+                    FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().volume = 0;
                     AudioClip deathClip = playerDeath;
                     myAudioSource.PlayOneShot(deathClip, playerDeathVolume);
+                    yield return new WaitForSeconds(3f);
+                    FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().volume = 0.1f;
                     FindObjectOfType<LevelLoader>().LoadGameOverScreen();
                 }
                 sp.spawn = true;
@@ -134,7 +137,7 @@ public class Object : MonoBehaviour
 
             if (Input.GetKey(KeyCode.Space))
             {
-                timeToMove = 0.05f;
+                timeToMove = 0.005f;
             }
 
             if (Input.GetKeyUp(KeyCode.Space))

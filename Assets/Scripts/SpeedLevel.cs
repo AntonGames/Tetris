@@ -5,17 +5,27 @@ using UnityEngine.UI;
 
 public class SpeedLevel : MonoBehaviour
 {
-    private int levelNumber;
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
+    public string GetLevelText()
+    {
+        UpdateLevelText();
+        return GetComponent<Text>().text;
+    }
+
+    private void UpdateLevelText()
+    {
+        int levelNumber = PlayerPrefsController.GetCurrentLevel();
+        GetComponent<Text>().text = "Level " + levelNumber.ToString();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        levelNumber = FindObjectOfType<GameController>().levelNumber;
-        GetComponent<Text>().text = "Level " + levelNumber.ToString();
+        UpdateLevelText();
     }
 }

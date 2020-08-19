@@ -9,12 +9,13 @@ public class DebugModeText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        debugMode = FindObjectOfType<DebugMode>().debugMode;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        debugMode = FindObjectOfType<DebugMode>().debugMode;
         GetComponent<Text>().text = debugMode ? "Debug Mode" : "";
     }
 }

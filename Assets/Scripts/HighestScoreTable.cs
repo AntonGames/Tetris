@@ -9,6 +9,8 @@ public class HighestScoreTable : MonoBehaviour
     Text[] playerText = new Text[3];
     GameObject[] score = new GameObject[3];
     Text[] scoreText = new Text[3];
+    GameObject[] level = new GameObject[3];
+    Text[] levelText = new Text[3];
 
     private void ResetPlayerNameAndScore(int index)
     {
@@ -17,6 +19,9 @@ public class HighestScoreTable : MonoBehaviour
         scoreText[index].text = PlayerPrefsController.GetScore(index + 1) == 0 ?
                                 "-" :
                                 PlayerPrefsController.GetScore(index + 1).ToString();
+        levelText[index].text = PlayerPrefsController.GetScore(index + 1) == 0 ?
+                                "-" :
+                                PlayerPrefsController.GetLevel(index + 1);
     }
 
     void Start()
@@ -26,8 +31,9 @@ public class HighestScoreTable : MonoBehaviour
             player[index] = transform.GetChild(index).gameObject;
             playerText[index] = player[index].GetComponent<Text>();
             score[index] = transform.GetChild(index + 3).gameObject;
-
             scoreText[index] = score[index].GetComponent<Text>();
+            level[index] = transform.GetChild(index + 6).gameObject;
+            levelText[index] = level[index].GetComponent<Text>();
 
             ResetPlayerNameAndScore(index);
         }
