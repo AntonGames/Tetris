@@ -135,15 +135,15 @@ public class Object : MonoBehaviour
                 }
             }
 
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 timeToMove = 0.005f;
             }
 
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                timeToMove = 2.25f - difficulty;
-            }
+            //if (Input.GetKeyUp(KeyCode.Space))
+            //{
+             //   timeToMove = 2.25f - difficulty;
+            //}
         }
     }
 }
