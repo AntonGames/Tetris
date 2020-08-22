@@ -47,21 +47,8 @@ public class Object : MonoBehaviour
             } 
             else 
             {
-                move = false;
-                AudioClip stopClip = objectStop[UnityEngine.Random.Range(0, objectStop.Length)];
-                myAudioSource.PlayOneShot(stopClip, objectStopVolume);
-                if (transform.position.y >= 6.5)
-                {
-                    FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().volume = 0;
-                    AudioClip deathClip = playerDeath;
-                    myAudioSource.PlayOneShot(deathClip, playerDeathVolume);
-                    yield return new WaitForSeconds(3f);
-                    FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().volume = 0.1f;
-                    FindObjectOfType<LevelLoader>().LoadGameOverScreen();
-                }
-                sp.spawn = true;
+                StopObject();
             }
-            
         }
     }
 
@@ -137,13 +124,36 @@ public class Object : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                timeToMove = 0.005f;
+                move = false;
+                while (gc.CheckMovement(this, GameController.MovementType.MOVE_DOWN))
+                {
+                    transform.position = new Vector2(transform.position.x, transform.position.y - 1);
+                }
+                StopObject();
             }
-
-            //if (Input.GetKeyUp(KeyCode.Space))
-            //{
-             //   timeToMove = 2.25f - difficulty;
-            //}
         }
     }
+    
+    IEnumerator CheckDeath()
+    {
+        if (transform.position.y >= 6.5)
+        {
+            FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().volume = 0;
+            AudioClip deathClip = playerDeath;
+            myAudioSource.PlayOneShot(deathClip, playerDeathVolume);
+            yield return new WaitForSeconds(3f);
+            FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().volume = 0.1f;
+            FindObjectOfType<LevelLoader>().LoadGameOverScreen();
+        }
+        sp.spawn = true;
+    }
+
+    private void StopObject()
+    {
+        move = false;
+        AudioClip stopClip = objectStop[UnityEngine.Random.Range(0, objectStop.Length)];
+        myAudioSource.PlayOneShot(stopClip, objectStopVolume);
+        StartCoroutine(CheckDeath());
+    }
+
 }
