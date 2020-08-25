@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class HighestScoreTable : MonoBehaviour
 {
-    GameObject[] player = new GameObject[3];
-    Text[] playerText = new Text[3];
-    GameObject[] score = new GameObject[3];
-    Text[] scoreText = new Text[3];
-    GameObject[] level = new GameObject[3];
-    Text[] levelText = new Text[3];
+    GameObject[] player = new GameObject[5];
+    Text[] playerText = new Text[5];
+    GameObject[] score = new GameObject[5];
+    Text[] scoreText = new Text[5];
+    GameObject[] level = new GameObject[5];
+    Text[] levelText = new Text[5];
 
     private void ResetPlayerNameAndScore(int index)
     {
@@ -26,13 +26,13 @@ public class HighestScoreTable : MonoBehaviour
 
     void Start()
     {
-        for (int index = 0; index < 3; ++index)
+        for (int index = 0; index < 5; ++index)
         {
             player[index] = transform.GetChild(index).gameObject;
             playerText[index] = player[index].GetComponent<Text>();
-            score[index] = transform.GetChild(index + 3).gameObject;
+            score[index] = transform.GetChild(index + 5).gameObject;
             scoreText[index] = score[index].GetComponent<Text>();
-            level[index] = transform.GetChild(index + 6).gameObject;
+            level[index] = transform.GetChild(index + 10).gameObject;
             levelText[index] = level[index].GetComponent<Text>();
 
             ResetPlayerNameAndScore(index);
@@ -42,7 +42,7 @@ public class HighestScoreTable : MonoBehaviour
 
     public void SetPlayerNameAndScore()
     {
-        for (int index = 0; index < 3; ++index)
+        for (int index = 0; index < 5; ++index)
         {
             ResetPlayerNameAndScore(index);
         }

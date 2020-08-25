@@ -6,6 +6,7 @@ public class MusicPlayer : MonoBehaviour
 {
     void Awake()
     {
+        Mute(!PlayerPrefsController.GetMusicBool());
         SetUpSingleton();
     }
 
@@ -20,4 +21,10 @@ public class MusicPlayer : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
+
+    public void Mute(bool mute)
+    {
+        GetComponent<AudioSource>().mute = mute;
+    }
+
 }

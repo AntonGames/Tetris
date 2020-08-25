@@ -138,11 +138,14 @@ public class Object : MonoBehaviour
     {
         if (transform.position.y >= 6.5)
         {
-            FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().volume = 0;
-            AudioClip deathClip = playerDeath;
-            myAudioSource.PlayOneShot(deathClip, playerDeathVolume);
-            yield return new WaitForSeconds(3f);
-            FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().volume = 0.1f;
+            if (PlayerPrefsController.GetSoundsBool())
+            {
+                FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().volume = 0;
+                AudioClip deathClip = playerDeath;
+                myAudioSource.PlayOneShot(deathClip, playerDeathVolume);
+                yield return new WaitForSeconds(3f);
+                FindObjectOfType<MusicPlayer>().GetComponent<AudioSource>().volume = 0.1f;
+            }
             FindObjectOfType<LevelLoader>().LoadGameOverScreen();
         }
         sp.spawn = true;
@@ -151,8 +154,11 @@ public class Object : MonoBehaviour
     private void StopObject()
     {
         move = false;
-        AudioClip stopClip = objectStop[UnityEngine.Random.Range(0, objectStop.Length)];
-        myAudioSource.PlayOneShot(stopClip, objectStopVolume);
+        if (PlayerPrefsController.GetSoundsBool())
+        {
+            AudioClip stopClip = objectStop[UnityEngine.Random.Range(0, objectStop.Length)];
+            myAudioSource.PlayOneShot(stopClip, objectStopVolume);
+        }
         StartCoroutine(CheckDeath());
     }
 

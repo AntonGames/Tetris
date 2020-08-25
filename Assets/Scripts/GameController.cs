@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -16,7 +17,10 @@ public class GameController : MonoBehaviour
 
     AudioSource myAudioSource;
     [SerializeField] AudioClip fullLineAudio;
-    [SerializeField] [Range(0, 1)] float fullLineAudioVolume = 0.3f; 
+    [SerializeField] [Range(0, 1)] float fullLineAudioVolume = 0.3f;
+    [SerializeField] GameObject pause;
+    [SerializeField] GameObject pauseCanvas;
+    [SerializeField] GameObject predictionsCanvas;
 
     public void BuildMap()
     {
@@ -26,6 +30,8 @@ public class GameController : MonoBehaviour
 
     private void Awake()
     {
+        predictionsCanvas.SetActive(PlayerPrefsController.GetPredicitionsBool());
+        pauseCanvas.SetActive(false);
         myAudioSource = GetComponent<AudioSource>();
         PlayerPrefsController.SetCurrentScoreToZero();
         PlayerPrefsController.SetCurrentLevelToOne();
@@ -172,8 +178,29 @@ public class GameController : MonoBehaviour
                 PlayerPrefsController.SetCurrentLevel(levelNumber);
             }
             bonus = 0;
-            AudioClip fullLineClip = fullLineAudio;
-            myAudioSource.PlayOneShot(fullLineClip, fullLineAudioVolume);
+            if (PlayerPrefsController.GetSoundsBool())
+            {
+                AudioClip fullLineClip = fullLineAudio;
+                myAudioSource.PlayOneShot(fullLineClip, fullLineAudioVolume);
+            }
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (Time.timeScale == 1)
+            {
+                pauseCanvas.SetActive(true);
+                pause.GetComponent<Text>().text = "Pause";
+                Time.timeScale = 0;
+            }
+            else if (Time.timeScale == 0)
+            {
+                pauseCanvas.SetActive(false);
+                Time.timeScale = 1;
+            }
         }
     }
 }

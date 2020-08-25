@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class LevelLoader : MonoBehaviour
 {
     public void LoadMainScene()
     {
-        PlayerPrefsController.SetDifficulty(FindObjectOfType<OptionsController>().difficultySlider.value);
         SceneManager.LoadScene("Main Scene");
     }
 
@@ -17,9 +17,22 @@ public class LevelLoader : MonoBehaviour
         SceneManager.LoadScene("Starting Screen");
     }
 
+    public void LoadStartingScreenFromOptionsScreen()
+    {
+        PlayerPrefsController.SetMusicBool(FindObjectOfType<MusicToggle>().GetComponent<Toggle>().isOn);
+        PlayerPrefsController.SetSoundsBool(FindObjectOfType<SoundEffectsToggle>().GetComponent<Toggle>().isOn);
+        PlayerPrefsController.SetDifficulty(FindObjectOfType<OptionsController>().difficultySlider.value);
+        SceneManager.LoadScene("Starting Screen");
+    }
+
     public void LoadGameOverScreen()
     {
         SceneManager.LoadScene("Game Over Screen");
+    }
+
+    public void LoadOptionsScreen()
+    {
+        SceneManager.LoadScene("Options Screen");
     }
 
     public void QuitGame()
